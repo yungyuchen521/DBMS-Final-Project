@@ -1,9 +1,9 @@
 create table registration_agency(
     id int,
     agency_id int,
-    agency_name varchar(50) collate utf8_unicode_ci,
-    agency_address varchar(100) collate utf8_unicode_ci,
-    contact_person varchar(8) collate utf8_unicode_ci,
+    agency_name varchar(50) collate utf8_general_ci,
+    agency_address varchar(100) collate utf8_general_ci,
+    contact_person varchar(8) collate utf8_general_ci,
     phone_number varchar(30),
     email varchar(100),
     distance varchar(10),

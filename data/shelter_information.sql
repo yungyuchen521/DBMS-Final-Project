@@ -1,6 +1,6 @@
 create table shelter_information(
     id int,
-    shelter_name varchar(50) collate utf8_unicode_ci,
+    shelter_name varchar(50) collate utf8_general_ci,
     max_shelter int,
     num_shelter int,
     light varchar(15),
