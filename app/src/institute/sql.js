@@ -7,8 +7,8 @@ app.get("/", (req, res) => {
 	const db = mysql.createConnection({
 		host: "localhost",
 		user: "root",
-		password: ***REMOVED***,
-		database: "final_project"
+		password: "your password",
+		database: "your db name"
 	});
 
 	db.connect(err => {
