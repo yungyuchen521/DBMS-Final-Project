@@ -1,0 +1,23 @@
+body {
+	width: 80%;
+	margin: 0 auto;
+}
+
+#title {
+	margin: 0 auto;
+	text-align: center;
+}
+
+#shelters-table {
+	width: 80%;
+	margin: 50px auto;
+}
+
+table {
+	margin: 20px;
+}
+
+th, td {
+	padding: 3px;
+	border: 1px solid black;
+}
