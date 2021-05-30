@@ -1,10 +1,10 @@
 create table registration_agency_normalize(
     agency_id int,
-    agency_name varchar(50) collate utf8_general_ci,
-    agency_address varchar(100) collate utf8_general_ci,
-    contact_person varchar(8) collate utf8_general_ci,
-    phone_number varchar(30),
-    email varchar(100),
+    agency_name varchar(50) collate utf8_general_ci default null,
+    agency_address varchar(100) collate utf8_general_ci default null,
+    contact_person varchar(8) collate utf8_general_ci default null,
+    phone_number varchar(30) default null,
+    email varchar(100) default null,
     primary key (agency_id)
 );
 
