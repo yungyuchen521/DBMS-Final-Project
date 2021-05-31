@@ -1,0 +1,11 @@
+source adopt_animal.sql;
+source adopt_animal_normalize.sql;
+source animal_subid_normalize.sql;
+source lost_pet.sql;
+source owner.sql;
+source lost_pet_normalize.sql;
+source register_status.sql;
+source registration_agency.sql;
+source registration_agency_normalize.sql;
+source shelter_information.sql;
+source shelter_normalize.sql;
