@@ -1,7 +1,7 @@
 drop table if exists shelter;
 
 create table shelter(
-	id int,
+	id int not null AUTO_INCREMENT,
 	shelter_name varchar(50),
 	area_id int,
 	max_shelter int,

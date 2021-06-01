@@ -13,7 +13,7 @@ select owner_name, phone, email
 from lost_pet;
 
 create table owner(
-	id int,
+	id int not null AUTO_INCREMENT,
 	name varchar(10) DEFAULT NULL,
 	phone varchar(40) DEFAULT NULL,
     email varchar(50) DEFAULT NULL,

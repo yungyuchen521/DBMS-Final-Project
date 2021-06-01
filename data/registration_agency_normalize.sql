@@ -1,7 +1,7 @@
 drop table if exists registration_agency_normalize;
 
 create table registration_agency_normalize(
-    agency_id int,
+    agency_id int not null AUTO_INCREMENT,
     agency_name varchar(50) default null,
     agency_address varchar(100) default null,
     contact_person varchar(8) default null,

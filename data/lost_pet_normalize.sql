@@ -1,7 +1,7 @@
 drop table if exists lost_pet_normalize;
 
 create table lost_pet_normalize(
-    chip_id varchar(25),
+    chip_id varchar(25) not null,
     name varchar(20) DEFAULT NULL,
     type varchar(1) DEFAULT NULL,
     sex varchar(1) DEFAULT NULL,
@@ -11,7 +11,7 @@ create table lost_pet_normalize(
     feature varchar(200) DEFAULT NULL,
     lost_time date,
     lost_place varchar(50) DEFAULT NULL,
-    owner_id int,
+    owner_id int not null,
     picture varchar(100),
     primary key (chip_id)
 );

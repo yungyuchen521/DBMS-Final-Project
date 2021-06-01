@@ -1,7 +1,7 @@
 drop table if exists adopt_animal_normalize;
 
 create table adopt_animal_normalize(
-    animal_id int,
+    animal_id int not null AUTO_INCREMENT,
     animal_subid varchar(20),
     animal_kind varchar(3) default null,
     animal_sex varchar(1) default null,
