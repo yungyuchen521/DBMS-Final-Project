@@ -2,7 +2,7 @@ drop table if exists adopt_animal_normalize;
 
 create table adopt_animal_normalize(
     animal_id int not null AUTO_INCREMENT,
-    animal_subid varchar(20),
+    animal_shelter_pkid int not null,
     animal_kind varchar(3) default null,
     animal_sex varchar(1) default null,
     animal_bodytype varchar(10) default null,
@@ -21,7 +21,7 @@ create table adopt_animal_normalize(
 );
 
 insert into adopt_animal_normalize
-select animal_id, animal_subid, animal_kind, animal_sex, animal_bodytype, animal_colour,
+select animal_id, animal_shelter_pkid, animal_kind, animal_sex, animal_bodytype, animal_colour,
        animal_age, animal_sterilization, animal_bacterin, animal_foundplace, animal_status,
        animal_remark, animal_opendate, animal_closeddate, animal_createtime,album_file
 from adopt_animal;
