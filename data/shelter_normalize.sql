@@ -17,3 +17,7 @@ select distinct A.animal_shelter_pkid, S.shelter_name, A.animal_area_pkid, S.max
 from adopt_animal A, shelter_information S
 where A.shelter_name like S.shelter_name and A.shelter_name not in 
 	(select distinct shelter_name from shelter);
+
+alter table shelter
+add column can_help boolean default false,
+add column need_help boolean default false;

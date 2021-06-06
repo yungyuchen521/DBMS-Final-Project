@@ -8,7 +8,9 @@ create table registration_agency(
     contact_person varchar(8) default null,
     phone_number varchar(30) default null,
     email varchar(100) default null,
-    distance varchar(10),
+    distance varchar(10) default null,
+    lat decimal(8,5) default null,
+    lng decimal(8,5) default null,
     primary key (agency_id)
 );
 
@@ -18,7 +20,7 @@ fields terminated by ','
 enclosed by '"'
 lines terminated by '\n'
 ignore 1 lines
-(@a, @b, @c, @d, @e, @f, @g, @h)
+(@a, @b, @c, @d, @e, @f, @g, @h, @i, @j)
 SET
 id = NULLIF(@a,''),
 agency_id = NULLIF(@b,''),
@@ -27,5 +29,7 @@ agency_address = NULLIF(@d,''),
 contact_person = NULLIF(@e,''),
 phone_number = NULLIF(@f,''),
 email = NULLIF(@g,''),
-distance = NULLIF(@h,'')
+distance = NULLIF(@h,''),
+lat = NULLIF(@i,''),
+lng = NULLIF(@j,'')
 ;
