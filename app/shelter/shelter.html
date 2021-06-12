@@ -3,20 +3,72 @@
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="shelter.css">
-	<title>public shelters</title>
+	<title>全台公立收容所</title>
 </head>
 
-<body onload="loadShelters()">
+<body onload="initTable()">
 	<h1 id="title">全台公立收容所</h1>
 
 	<div id="filter">
+		<h3>篩選</h3>
+		<label>地址
+			<input type="text" name="address" id="address">
+		</label>
+
+		<label>名稱
+			<input type="text" name="name" id="name">
+		</label>
+
 		<label>地區
-			<select>
+			<select id="region">
 				<option>無</option>
-				<option>台北市</option>
-				<option>新北市</option>
+				<option>臺北</option>
+				<option>新北</option>
+				<option>基隆</option>
+				<option>宜蘭</option>
+				<option>桃園</option>
+				<option>新竹</option>
+				<option>苗栗</option>
+				<option>臺中</option>
+				<option>彰化</option>
+				<option>南投</option>
+				<option>雲林</option>
+				<option>嘉義</option>
+				<option>臺南</option>
+				<option>高雄</option>
+				<option>屏東</option>
+				<option>花蓮</option>
+				<option>臺東</option>
+				<option>澎湖</option>
+				<option>金門</option>
+				<option>連江</option>
+				<option>蘭嶼</option>
+				<option>綠島</option>
 			</select>
 		</label>
+
+		<label>需要支援
+			<select id="needHelp">
+				<option>無</option>
+				<option>是</option>
+				<option>否</option>
+			</select>
+		</label>
+
+		<label>可提供支援
+			<select id="canHelp">
+				<option>無</option>
+				<option>是</option>
+				<option>否</option>
+			</select>
+		</label>
+
+		<label>
+			<input type="checkbox" id="sort">
+			根據 收容數量/容量 排序
+		</label>
+
+		<button class="submitButton" onclick="filterTable()">Submit</button>
 	</div>
 
 

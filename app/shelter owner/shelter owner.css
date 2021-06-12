@@ -1,0 +1,86 @@
+body {
+	width: 80%;
+	margin: 0 auto;
+
+	padding-bottom: 200px;
+}
+
+#title {
+	margin: 0 auto;
+	text-align: center;
+}
+
+#owner-register {
+	padding: 10px;
+	margin: 0 auto;
+	border: 5px solid black;
+}
+
+#shelter-container {
+	width: 80%;
+	margin: 20px auto;
+	padding: 50px;
+	border: 5px solid black;
+}
+
+#shelter-container > div {
+	margin: 20px;
+	display: inline-block;
+	width: 180px;
+}
+
+#animals-filter {
+	height: 200px;
+	overflow-y: scroll;
+	white-space: nowrap;
+	display: none;
+	border: 3px solid black;
+	padding: 10px;
+}
+
+#animals-container {
+	width: 90%;
+	margin: 20px auto;
+	border: 5px solid black;
+	padding: 50px;
+}
+
+#animals-container img {
+	height: 150px;
+	width: 150px;
+	display: block;
+}
+
+#animals-container > div {
+	display: inline-block;
+	margin: 10px 5px;
+	width: 200px;
+	height: 450px;
+
+	overflow-x: scroll;
+	overflow-y: scroll;
+	white-space: nowrap;
+
+	border-radius: 20px;
+	background-color: #eee;
+	padding: 50px;
+}
+
+button {
+	display: inline-block;
+	margin: 10px;
+
+	height: 30px;
+	width: 80px;
+	font-size: 20px;
+}
+
+#animals-register {
+	display: none;
+	border: 5px solid black;
+	padding: 10px;
+}
+
+label {
+	display: block;
+}

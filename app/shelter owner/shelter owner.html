@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="shelter owner.css">
+	<title>收容所管理</title>
+</head>
+
+<body>
+	<h1 id="title">收容所管理</h1>
+
+	<div id="search_engine">
+		<label>收容所 ID
+			<input type="text" name="id" id="id">
+		</label>
+
+		<button class="submitButton" onclick="searchShelter()">Submit</button>
+	</div>
+
+	<h3>註冊</h3>
+	<div id="owner-register">
+		<label>名稱
+			<input type="text" name="newName" id="newName">
+		</label>
+
+		<label>地址
+			<input type="text" name="newAddress" id="newAddress">
+		</label>
+
+		<label>電話
+			<input type="tel" name="newNumber" id="newNumber">
+		</label>
+
+        <label>容量
+			<input type="number" name="newCapacity" id="newCapacity" value="0">
+		</label>
+
+        <label>已收容數量
+			<input type="number" name="newOccupied" id="newOccupied" value="0">
+		</label>
+
+        <label>需要支援
+			<select id="newNeedHelp">
+                <option>是</option>
+                <option>否</option>
+            </select>
+		</label>
+
+        <label>可提供支援
+			<select id="newCanHelp">
+                <option>是</option>
+                <option>否</option>
+            </select>
+		</label>
+
+		<button class="submitButton" onclick="insertShelter()">Submit</button>
+	</div>
+
+	<h3>收容所資料</h3>
+	<div id="shelter-container"></div>
+
+	<h3>收容動物</h3>
+	<div id="animals-filter">
+		<h4>篩選</h4>
+
+		<label>ID
+			<input type="text" name="id" id="id">
+		</label>
+
+		<label>種類
+			<select id="kind">
+				<option>無</option>
+				<option>狗</option>
+				<option>貓</option>
+				<option>其他</option>
+			</select>
+		</label>
+
+        <label>性別
+            <select id="sex">
+				<option>無</option>
+                <option>F</option>
+                <option>M</option>
+				<option>N</option>
+            </select>
+        </label>
+
+        <label>體型
+            <select id="size">
+				<option>無</option>
+                <option>SMALL</option>
+                <option>MEDIUM</option>
+                <option>BIG</option>
+            </select>
+        </label>
+
+		<label>毛色
+			<input type="text" name="color" id="color">
+		</label>
+
+		<label>年紀
+			<select id="age">
+				<option>無</option>
+				<option>ADULT</option>
+				<option>CHILD</option>
+				<option>NULL</option>
+			</select>
+		</label>
+
+        <label>絕育
+            <select id="sterilization">
+				<option>無</option>
+                <option>T</option>
+                <option>F</option>
+            </select>
+        </label>
+
+        <label>狂犬病疫苗
+            <select id="bacterin">
+				<option>無</option>
+                <option>T</option>
+                <option>F</option>
+            </select>
+        </label>
+
+		<label>動物狀態
+			<select id="status">
+				<option>無</option>
+				<option>OPEN</option>
+                <option>ADOPTED</option>
+                <option>DEAD</option>
+				<option>NONE</option>
+				<option>OTHER</option>
+            </select>
+		</label>
+
+		<button class="submitButton" onclick="filterCards()">Submit</button>
+	</div>
+	<div id="animals-container"></div>
+    
+    <h3>新增動物</h3>
+	<div id="animals-register">
+		<label>種類
+			<select id="newKind">
+				<option>狗</option>
+				<option>貓</option>
+				<option>其他</option>
+			</select>
+		</label>
+
+        <label>性別
+            <select id="newSex">
+                <option>F</option>
+                <option>M</option>
+				<option>N</option>
+            </select>
+        </label>
+
+        <label>體型
+            <select id="newBodyType">
+                <option>SMALL</option>
+                <option>MEDIUM</option>
+                <option>BIG</option>
+            </select>
+        </label>
+
+		<label>毛色
+			<input type="text" name="newColor" id="newColor">
+		</label>
+
+		<label>年紀
+			<select id="newAge">
+				<option>ADULT</option>
+				<option>CHILD</option>
+				<option>NULL</option>
+			</select>
+		</label>
+
+        <label>絕育
+            <select id="newSterilization">
+                <option>T</option>
+                <option>F</option>
+            </select>
+        </label>
+
+        <label>狂犬病疫苗
+            <select id="newBacterin">
+                <option>T</option>
+                <option>F</option>
+            </select>
+        </label>
+
+		<label>尋獲地點
+			<input type="text" name="newFoundPlace" id="newFoundPlace">
+		</label>
+
+		<label>動物狀態
+			<select id="newStatus">
+				<option>OPEN</option>
+                <option>ADOPTED</option>
+                <option>DEAD</option>
+				<option>NONE</option>
+				<option>OTHER</option>
+            </select>
+		</label>
+
+        <label>備註
+			<input type="text" name="newRemark" id="newRemark">
+		</label>
+
+        <label>開放領養日期
+			<input type="date" name="newOpenDate" id="newOpenDate" value="2021-01-01">
+		</label>
+
+        <label>結束領養日期
+			<input type="date" name="newCloseDate" id="newCloseDate" value="9999-12-31">
+		</label>
+
+		<button class="submitButton" onclick="insertCard()">Submit</button>
+	</div>
+
+<script type="text/javascript" src="shelter owner.js"></script>
+
+</body>
+</html>

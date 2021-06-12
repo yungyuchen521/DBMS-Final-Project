@@ -1,78 +1,249 @@
-/*
-const institutes = [
-	{name: "躍生動物醫院", type: "動物醫院", address: "新北市板橋區民權路258-2號1樓", contact: "丁肇民", phone_number: "0289681075", email: "dvm@tpts5.seed.net.tw"},
-	{name: "狗窩寵物精品店", type: "寵物用品", address: "新北市板橋區四川路一段87巷132號1樓", contact: "王新益", phone_number: "0918-787845", email: "t22661234@yahoo.com.tw"},
-	{name: "拉拉熊寵物生活館", type: "動物醫院", address: "新北市板橋區大觀路3段142-1號1樓", contact: "郭佩怡", phone_number: "0903368236", email: null},
-	{name: "瑪利寵物美容館", type: "寵物美容", address: "新北市板橋區新海路413號1樓", contact: "林聖欽", phone_number: "02-82596565", email: null},
-	{name: "狗狗公園快樂狗旅館", type: "寵物旅館", address: "新北市淡水區中山北路一段247巷80號1樓", contact: "胡宗良", phone_number: "02-86316580", email: "lorence0126@gmail.com"}
-];
-*/
-const col_names = ["名稱", "類型", "地址", "聯絡人", "電話", "email"];
+const col_names = ["", "名稱", "地址", "聯絡人", "電話", "email", "距離 (km)"];
+const getUrl = "http://localhost:3000/institutes/";
+const postUrl = "http://localhost:3000/institutes/post";
+const positionUrl = "http://localhost:8000/position/post";
+const tableName = "registration_agency";
 
-loadInstitutes = () => {
-	fetch("http://localhost:3000/")
-    	.then(res => res.json())
-    	//.then(text => document.write(text))
-		.then(institutes => {
-			//console.log(institutes);
-			
-			for (var j = 0; j < institutes.length; j++)
-				console.log(institutes[j]);
-			const table = document.getElementById("institutes-table");
+buildTable = institutes => {
+	const table = document.getElementById("institutes-table");
+	table.innerHTML = "";
 
-			const thead = document.createElement("thead");
-			const tr_head = document.createElement("tr");
+	const thead = document.createElement("thead");
+	const tr_head = document.createElement("tr");
 
-			for (var i = 0; i < col_names.length; i++) {
-				const col = document.createElement("th");
-				const col_name = document.createTextNode(col_names[i]);
-				col.appendChild(col_name);
+	for (var i = 0; i < col_names.length; i++) {
+		const col = document.createElement("th");
+		const col_name = document.createTextNode(col_names[i]);
+		col.appendChild(col_name);
 
-				tr_head.appendChild(col);
-			}
-			thead.appendChild(tr_head);
+		tr_head.appendChild(col);
+	}
+	thead.appendChild(tr_head);
 
-			const tbody = document.createElement("tbody");
+	const tbody = document.createElement("tbody");
 
-			for (var i = 0; i < institutes.length; i++) {
-				
-				const tr = document.createElement("tr");
+	for (var i = 0; i < institutes.length; i++) {
+		const tr = document.createElement("tr");
+		tr.setAttribute("id", `tr${institutes[i].agency_id}`);
 
-				const td1 = document.createElement("td");
-				const name = document.createTextNode(institutes[i].agency_name);
-				td1.appendChild(name);
+		const td0 = document.createElement("td");
+		
+		const delButton = document.createElement("button");
+		delButton.setAttribute("class", "delButton");
+		delButton.setAttribute("onclick", "delEntry("+institutes[i].agency_id+")");
+		const delSymbol = document.createTextNode("X");
+		delButton.appendChild(delSymbol);
 
-				const td2 = document.createElement("td");
-				const type = document.createTextNode(institutes[i].type);
-				td2.appendChild(type);
+		const editButton = document.createElement("button");
+		editButton.setAttribute("class", "editButton");
+		editButton.setAttribute("id", `edit${institutes[i].agency_id}`);
+		editButton.setAttribute("onclick", "editEntry("+institutes[i].agency_id+")");
+		const editSymbol = document.createTextNode("edit");
+		editButton.appendChild(editSymbol);
 
-				const td3 = document.createElement("td");
-				const address = document.createTextNode(institutes[i].agency_address);
-				td3.appendChild(address);
+		td0.appendChild(delButton);
+		td0.appendChild(editButton);
+		tr.appendChild(td0);
 
-				const td4 = document.createElement("td");
-				const contact = document.createTextNode(`${institutes[i].contact_person ? institutes[i].contact_person : "N/A"}`);
-				td4.appendChild(contact);
+		const details = [
+			institutes[i].agency_name,
+			institutes[i].agency_address,
+			institutes[i].contact_person,
+			institutes[i].phone_number,
+			institutes[i].email,
+			institutes[i].distance !== undefined ? Math.round(institutes[i].distance * 1000) / 1000 : undefined
+		];
 
-				const td5 = document.createElement("td");
-				const phone_number = document.createTextNode(`${institutes[i].phone_number ? institutes[i].phone_number : "N/A"}`);
-				td5.appendChild(phone_number);
+		for (var j = 0; j < details.length; j++) {
+			const td = document.createElement("td");
+			const text = document.createElement("p");
+			text.innerHTML = ((details[j] || details[j] == 0) ? details[j] : "N/A");
 
-				const td6 = document.createElement("td");
-				const email = document.createTextNode(`${institutes[i].email ? institutes[i].email : "N/A"}`);
-				td6.appendChild(email);
-				
-				tr.appendChild(td1);
-				tr.appendChild(td2);
-				tr.appendChild(td3);
-				tr.appendChild(td4);
-				tr.appendChild(td5);
-				tr.appendChild(td6);
+			const newText = document.createElement("input");
+			newText.setAttribute("type", "text");
+			newText.setAttribute("value", (details[j] ? details[j] : ""));
+			newText.style.display = "none";
 
-				tbody.appendChild(tr);
-			}
+			td.appendChild(text);
+			td.appendChild(newText);
+			tr.appendChild(td);
+		}
 
-			table.appendChild(thead);
-			table.appendChild(tbody);
+		tbody.appendChild(tr);
+	}
+
+	table.appendChild(thead);
+	table.appendChild(tbody);
+}
+
+const getPos = async address => {
+	if (address.length == 0) {
+		alert("invalid address");
+		return;
+	}
+
+    params = {
+		address: address
+	};
+
+	const res = await fetch(positionUrl, {
+		method: "POST",
+		body: JSON.stringify(params),
+		headers: new Headers({
+			'Content-Type': 'application/json'
 		})
+	})
+
+	const data = await res.json();
+    
+	return data;
+}
+
+const initTable = () => {
+    fetch(getUrl, {method: "GET"})
+    .then(res => res. json())
+	.then(institutes =>buildTable(institutes))  
 };
+
+const filterTable = () => {
+	if (document.getElementById("sort").checked) {
+		getPos(document.getElementById("userAddress").value)
+		.then(pos => {
+			if (pos == 999) {
+				alert("invalid address");
+				return;
+			}
+
+			params = {
+				queryType: "SORT",
+				tableName: tableName,
+				lat: pos.lat,
+				lng: pos.lng,
+				address: document.getElementById("address").value,
+				name: document.getElementById("name").value,
+				region: document.getElementById("region").value
+			};
+	
+			fetch(postUrl, {
+				method: "POST",
+				body: JSON.stringify(params),
+				headers: new Headers({
+					'Content-Type': 'application/json'
+				})
+			})
+			.then(res => res.json())
+			.then(institutes => buildTable(institutes))
+		})
+	}
+
+	else {
+		params = {
+			queryType: "FILTER",
+			tableName: tableName,
+			address: document.getElementById("address").value,
+			name: document.getElementById("name").value,
+			region: document.getElementById("region").value
+		};
+
+		fetch(postUrl, {
+			method: "POST",
+			body: JSON.stringify(params),
+			headers: new Headers({
+				'Content-Type': 'application/json'
+			})
+		})
+		.then(res => res.json())
+		.then(institutes => buildTable(institutes))
+	}
+};
+
+insertEntry = () => {
+	params = {
+		queryType: "INSERT",
+		tableName: tableName,
+		columns: "(agency_name, agency_address, contact_person, phone_number, email)",
+		values: "(".concat(
+			"'", document.getElementById("newName").value, "', ",
+			"'", document.getElementById("newAddress").value, "', ",
+			"'", document.getElementById("newContact").value, "', ",
+			"'", document.getElementById("newNumber").value, "', ",
+			"'", document.getElementById("newEmail").value, "'",
+			")"
+		)
+	};
+
+	fetch(postUrl, {
+		method: "POST",
+		body: JSON.stringify(params),
+		headers: new Headers({
+			'Content-Type': 'application/json'
+		})
+	})
+    .then(res => console.log(res))
+	.then(() => alert("inserted"))
+}
+
+delEntry = id => {
+	params = {
+		queryType: "DELETE",
+		tableName: tableName,
+		id: id
+	};
+
+	fetch(postUrl, {
+		method: "POST",
+		body: JSON.stringify(params),
+		headers: new Headers({
+			'Content-Type': 'application/json'
+		})
+	})
+    .then(res => res.json() )
+	.then(() => alert("deleted!"))
+}
+
+editEntry = id => {
+	const button = document.getElementById(`edit${id}`);
+	const tr = document.getElementById(`tr${id}`);
+
+	if (button.innerHTML == "edit") {
+		button.innerHTML = "done";
+
+		for (var i = 1; i <= 5; i++) {
+			tr.children[i].children[0].style.display = "none";
+			tr.children[i].children[1].style.display = "block";
+		}
+	}
+	
+	else if (button.innerHTML == "done") {
+		button.innerHTML = "edit";
+	
+		for (var i = 1; i <= 5; i++) {
+			tr.children[i].children[0].style.display = "block";
+			tr.children[i].children[1].style.display = "none";
+		}
+
+		params = {
+			queryType: "UPDATE",
+			tableName: tableName,
+			id: id,
+			columns: ["agency_name", "agency_address", "contact_person", "phone_number", "email"],
+			values: [
+				tr.children[1].children[1].value,
+				tr.children[2].children[1].value,
+				tr.children[3].children[1].value,
+				tr.children[4].children[1].value,
+				tr.children[5].children[1].value
+			]
+		};
+	
+		fetch(postUrl, {
+			method: "POST",
+			body: JSON.stringify(params),
+			headers: new Headers({
+				'Content-Type': 'application/json'
+			})
+		})
+		.then(res => res.json() )
+		.then(() => alert("updated!"))
+	}
+}

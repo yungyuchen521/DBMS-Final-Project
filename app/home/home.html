@@ -6,35 +6,50 @@
 	<title></title>
 </head>
 
-<body onload="loadPets()">
+<body onload="initCards()">
 	<h1 id="title">Home</h1>
 
 	
 	<div id="filter">
 		<label>動物種類
-			<select>
+			<select id="kind">
 				<option>無</option>
 				<option>狗</option>
 				<option>貓</option>
+				<option>其他</option>
 			</select>
 		</label>
 
 		<label>體型
-			<select>
+			<select id="size">
 				<option>無</option>
-				<option>大</option>
-				<option>中</option>
-				<option>小</option>
+				<option>BIG</option>
+				<option>MEDIUM</option>
+				<option>SMALL</option>
 			</select>
 		</label>
 
 		<label>性別
-			<select>
+			<select id="sex">
 				<option>無</option>
-				<option>公</option>
-				<option>母</option>
+				<option>M</option>
+				<option>F</option>
 			</select>
 		</label>
+
+		<label>顏色
+			<input type="text" name="color" id="color">
+		</label>
+
+		<label>開放領養
+			<select id="adopt">
+				<option>無</option>
+				<option>是</option>
+				<option>否</option>
+			</select>
+		</label>
+
+		<button onclick="filterCards()">Submit</button>
 	</div>
 
 

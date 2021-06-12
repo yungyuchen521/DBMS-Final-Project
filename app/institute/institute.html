@@ -3,35 +3,90 @@
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="institute.css">
-	<title></title>
+	<title>相關機構</title>
 </head>
 
-<body onload="loadInstitutes()">
+<body onload="initTable()">
 	<h1 id="title">相關機構</h1>
-
 	
-	<div id="filter">
+	<h3>篩選</h3>
+	<div id="filter">	
 		<label>地址
-			<input type="text" name="address">
+			<input type="text" name="address" id="address">
 		</label>
 
 		<label>名稱
-			<input type="text" name="address">
+			<input type="text" name="name" id="name">
 		</label>
 
-		<label>類型
-			<select>
+		<label>地區
+			<select id="region">
 				<option>無</option>
-				<option>動物醫院</option>
-				<option>寵物用品</option>
-				<option>寵物美容</option>
-				<option>寵物旅館</option>
+				<option>臺北</option>
+				<option>新北</option>
+				<option>基隆</option>
+				<option>宜蘭</option>
+				<option>桃園</option>
+				<option>新竹</option>
+				<option>苗栗</option>
+				<option>臺中</option>
+				<option>彰化</option>
+				<option>南投</option>
+				<option>雲林</option>
+				<option>嘉義</option>
+				<option>臺南</option>
+				<option>高雄</option>
+				<option>屏東</option>
+				<option>花蓮</option>
+				<option>臺東</option>
+				<option>澎湖</option>
+				<option>金門</option>
+				<option>馬祖</option>
+				<option>蘭嶼</option>
+				<option>綠島</option>
 			</select>
 		</label>
+
+		<label>
+			<input type="checkbox" id="sort" onclick="console.log(document.getElementById('sort').checked)">
+			根據距離排序
+		</label>
+
+		<label>您的地址
+			<input type="text" id="userAddress">
+		</label>
+
+		<button class="submitButton" onclick="filterTable()">Submit</button>
 	</div>
 
+	
 
-	<div id="institutes-table"></div>
+	<h3>新增機構</h3>
+	<div id="new-institute">
+		<label>名稱
+			<input type="text" name="newName" id="newName">
+		</label>
+
+		<label>地址
+			<input type="text" name="newAddress" id="newAddress">
+		</label>
+
+		<label>聯絡人
+			<input type="text" name="newContact" id="newContact">
+		</label>
+
+		<label>電話
+			<input type="text" name="newNumber" id="newNumber">
+		</label>
+
+		<label>email
+			<input type="text" name="newEmail" id="newEmail">
+		</label>
+
+		<button class="submitButton" onclick="insertEntry()">Submit</button>
+	</div>
+
+	<table id="institutes-table"></table>
 
 <script type="text/javascript" src="institute.js"></script>
 

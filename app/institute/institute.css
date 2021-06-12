@@ -8,16 +8,63 @@ body {
 	text-align: center;
 }
 
-#institutes-table {
-	width: 80%;
-	margin: 50px auto;
+label {
+	display: block;
+	margin: 10px auto;
+}
+
+#filter {
+	border: 3px solid black;
+	padding: 10px;
+}
+
+#filter label * {
+	font-size: 25px;
+}
+
+#new-institute {
+	border: 3px solid black;
+	padding: 10px;
 }
 
 table {
-	margin: 20px;
+	margin: 50px auto;
 }
 
 th, td {
-	padding: 3px;
+	padding: 10px;
 	border: 1px solid black;
+	min-width: 50px;
+	font-size: 20px;
+}
+
+.submitButton {
+	width: 50px;
+	height: 30px;
+	font-size: 10px;
+	margin: 20px;
+}
+
+.delButton {
+	width: 25px;
+	height: 25px;
+	border-radius: 100%;
+	font-size: 12px;
+	font-weight: bold;
+	margin: 5px;
+
+	background-color: red;
+	color: white;
+}
+
+.editButton {
+	display: inline-block;
+	width: 40px;
+	height: 30px;
+	font-size: 12px;
+	font-weight: bold;
+	margin: 5px;
+
+	background-color: black;
+	color: white;
 }

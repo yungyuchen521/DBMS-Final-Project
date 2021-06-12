@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="owner.css">
+	<title>飼主</title>
+</head>
+
+<body>
+	<h1 id="title">飼主</h1>
+
+	<div id="search_engine">
+		<label>飼主 ID
+			<input type="text" name="id" id="id">
+		</label>
+
+		<button class="submitButton" onclick="searchOwner()">Submit</button>
+	</div>
+
+	<h3>註冊</h3>
+	<div id="owner-register">
+		<label>稱謂
+			<input type="text" name="newName" id="newName">
+		</label>
+
+		<label>聯絡電話
+			<input type="text" name="newPhone" id="newPhone">
+		</label>
+
+		<label>email
+			<input type="text" name="newEmail" id="newEmail">
+		</label>
+
+		<button class="submitButton" onclick="insertOwner()">Submit</button>
+	</div>
+
+	<h3>飼主資料</h3>
+	<div id="owner-container"></div>
+
+	<h3>您的走失寵物</h3>
+	<div id="pets-container"></div>
+
+	<h3>刊登遺失啟事</h3>
+	<div id="pet-register">
+		<label>晶片ID
+			<input type="text" name="newChipID" id="newChipID">
+		</label>
+
+		<label>寵物名字
+			<input type="text" name="newPetName" id="newPetName">
+		</label>
+
+		<label>寵物種類
+			<select id="newType">
+				<option>狗</option>
+				<option>貓</option>
+				<option>其他</option>
+			</select>
+		</label>
+
+		<label>寵物品種
+			<input type="text" name="newBreed" id="newBreed">
+		</label>
+
+		<label>寵物毛色
+			<input type="text" name="newColor" id="newColor">
+		</label>
+
+		<label>寵物性別
+			<select id="newSex">
+				<option>公</option>
+				<option>母</option>
+			</select>
+		</label>
+
+		<label>寵物外觀
+			<input type="text" name="newAppearance" id="newAppearance">
+		</label>
+
+		<label>遺失地點
+			<input type="text" name="newLostPlace" id="newLostPlace">
+		</label>
+
+		<label>遺失時間
+			<input type="date" name="newLostTime" id="newLostTime" value="2021-01-01">
+		</label>
+
+		<button class="submitButton" onclick="insertCard()">Submit</button>
+	</div>
+
+<script type="text/javascript" src="owner.js"></script>
+
+</body>
+</html>

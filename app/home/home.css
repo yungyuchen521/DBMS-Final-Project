@@ -9,14 +9,17 @@ body {
 }
 
 #pets-container {
-	width: 80%;
+	width: 100%;
 	margin: 50px auto;
 }
 
 #pets-container > div {
 	margin: 20px;
+	padding: 10px;
 	display: inline-block;
-	width: 180px;
+	width: 200px;
+	background-color: #eee;
+	border-radius: 10px;
 }
 
 #pets-container img {
@@ -24,3 +27,18 @@ body {
 	width: 150px;
 }
 
+#filter * {
+	font-size: 20px;
+}
+
+#filter > label {
+	display: block;
+	margin: 10px auto;
+}
+
+.info {
+	overflow-y: scroll;
+	overflow-x: scroll;
+	white-space: nowrap;
+	height: 200px;
+}

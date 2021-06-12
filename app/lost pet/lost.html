@@ -3,39 +3,46 @@
 <head>
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="lost.css">
-	<title></title>
+	<title>寵物協尋</title>
 </head>
 
-<body onload="loadPets()">
+<body onload="initCards()">
 	<h1 id="title">寵物協尋</h1>
 
 	<div id="filter">
-		<label>品種
-			<select>
+		<label>晶片號碼
+			<input type="text" name="chip_id" id="chip_id">
+		</label>
+
+		<label>種類
+			<select id="type">
 				<option>無</option>
-				<option>混種</option>
-				<option>臘腸</option>
+				<option>狗</option>
+				<option>貓</option>
+				<option>其他</option>
 			</select>
 		</label>
 
-		<label>體型
-			<select>
-				<option>無</option>
-				<option>大</option>
-				<option>中</option>
-				<option>小</option>
-			</select>
+		<label>品種
+			<input type="text" name="breed" id="breed">
 		</label>
 
 		<label>性別
-			<select>
+			<select id="sex">
 				<option>無</option>
 				<option>公</option>
 				<option>母</option>
 			</select>
 		</label>
+
+		<label>顏色
+			<input type="text" name="color" id="color">
+		</label>
+
+		<button class="submitButton" onclick="filterCards()">Submit</button>
 	</div>
 
+	<div id="details"></div>
 
 	<div id="pets-container"></div>
 
