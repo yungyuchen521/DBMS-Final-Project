@@ -9,14 +9,15 @@
 <body onload="initTable()">
 	<h1 id="title">相關機構</h1>
 	
-	<h3>篩選</h3>
+	
 	<div id="filter">	
+		<h3>篩選</h3>
 		<label>地址
-			<input type="text" name="address" id="address">
+			<input type="text" name="address" id="address" maxlength="100">
 		</label>
 
 		<label>名稱
-			<input type="text" name="name" id="name">
+			<input type="text" name="name" id="name" maxlength="50">
 		</label>
 
 		<label>地區
@@ -59,28 +60,26 @@
 		<button class="submitButton" onclick="filterTable()">Submit</button>
 	</div>
 
-	
-
-	<h3>新增機構</h3>
 	<div id="new-institute">
+		<h3>新增機構</h3>
 		<label>名稱
-			<input type="text" name="newName" id="newName">
+			<input type="text" name="newName" id="newName" maxlength="50">
 		</label>
 
 		<label>地址
-			<input type="text" name="newAddress" id="newAddress">
+			<input type="text" name="newAddress" id="newAddress" maxlength="100">
 		</label>
 
 		<label>聯絡人
-			<input type="text" name="newContact" id="newContact">
+			<input type="text" name="newContact" id="newContact" maxlength="8">
 		</label>
 
 		<label>電話
-			<input type="text" name="newNumber" id="newNumber">
+			<input type="text" name="newNumber" id="newNumber" maxlength="30">
 		</label>
 
 		<label>email
-			<input type="text" name="newEmail" id="newEmail">
+			<input type="text" name="newEmail" id="newEmail" maxlength="100">
 		</label>
 
 		<button class="submitButton" onclick="insertEntry()">Submit</button>
@@ -89,6 +88,7 @@
 	<table id="institutes-table"></table>
 
 <script type="text/javascript" src="institute.js"></script>
+<script type="text/javascript" src="../exception.js"></script>
 
 </body>
 </html>

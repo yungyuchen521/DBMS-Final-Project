@@ -207,14 +207,33 @@ searchOwner = () => {
 }
 
 insertOwner = () => {
+	const newName = document.getElementById("newName").value;
+	const newNumber = document.getElementById("newNumber").value;
+	const newEmail = document.getElementById("newEmail").value;
+
+	if (!newName) {
+		alert("請䟍入稱爲");
+		return;
+	}
+
+	if (!newNumber && !newEmail) {
+		alert("請至少留下一項聯絡方式(電話 / Email)");
+		return;
+	}
+
+	if (newNumber && !validPhoneNumber(newNumber)) {
+		alert("電話請輸入數字, '-', 或空白鍵");
+		return;
+	}
+
     params = {
 		queryType: "INSERT",
 		tableName: ownerTable,
 		columns: "(name, phone, email)",
 		values: "(".concat(
-			"'", document.getElementById("newName").value, "', ",
-			"'", document.getElementById("newPhone").value, "', ",
-			"'", document.getElementById("newEmail").value, "'",
+			"'", newName, "', ",
+			"'", newNumber, "', ",
+			"'", newEmail, "'",
 			")"
 		)
 	};
@@ -277,6 +296,21 @@ editOwner = id => {
 				inputs[2].value
 			]
 		};
+
+		if (!inputs[0].value) {
+			alert("請䟍入稱爲");
+			return;
+		}
+	
+		if (!inputs[1].value && !inputs[2].value) {
+			alert("請至少留下一項聯絡方式(電話 / Email)");
+			return;
+		}
+	
+		if (inputs[2].value && !validPhoneNumber(inputs[2].value)) {
+			alert("電話請輸入數字, '-', 或空白鍵");
+			return;
+		}
 	
 		fetch(postOwnerUrl, {
 			method: "POST",

@@ -12,11 +12,11 @@
 	<div id="filter">
 		<h3>篩選</h3>
 		<label>地址
-			<input type="text" name="address" id="address">
+			<input type="text" name="address" id="address" maxlength="100">
 		</label>
 
 		<label>名稱
-			<input type="text" name="name" id="name">
+			<input type="text" name="name" id="name" maxlength="50">
 		</label>
 
 		<label>地區
@@ -65,7 +65,7 @@
 
 		<label>
 			<input type="checkbox" id="sort">
-			根據 收容數量/容量 排序
+			根據 閒置容量 排序
 		</label>
 
 		<button class="submitButton" onclick="filterTable()">Submit</button>
@@ -75,6 +75,7 @@
 	<div id="shelters-table"></div>
 
 <script type="text/javascript" src="shelter.js"></script>
+<script type="text/javascript" src="../exception.js"></script>
 
 </body>
 </html>

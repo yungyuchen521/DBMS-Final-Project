@@ -6,7 +6,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 const url = "https://geocode.search.hereapi.com/v1/geocode?q=";
-const key = "0cgM_XHYmnnpSERFpaw_n6vyCWqpfN-AS1kP6ibNGlA";
+const key = "YHOY7MWY9S4G4kV1iwU7-Jm4o05wrBUPNJLYQwHxB8g";
 
 /*
 apply for new key here

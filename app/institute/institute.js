@@ -158,16 +158,47 @@ const filterTable = () => {
 };
 
 insertEntry = () => {
+	const newName = document.getElementById("newName").value;
+	const newAddress = document.getElementById("newAddress").value;
+	const newContact = document.getElementById("newContact").value;
+	const newNumber = document.getElementById("newNumber").value;
+	const newEmail = document.getElementById("newEmail").value;
+
+	if (!newName) {
+		alert("請填入名稱");
+		return;
+	}
+
+	if (!newAddress) {
+		alert("請填入電話");
+		return;
+	}
+
+	if (!newContact) {
+		alert("請填入聯絡人");
+		return;
+	}
+
+	if (!newNumber) {
+		alert("請填入電話");
+		return;
+	}
+
+	if (!newEmail) {
+		alert("請填入 email");
+		return;
+	}
+
 	params = {
 		queryType: "INSERT",
 		tableName: tableName,
 		columns: "(agency_name, agency_address, contact_person, phone_number, email)",
 		values: "(".concat(
-			"'", document.getElementById("newName").value, "', ",
-			"'", document.getElementById("newAddress").value, "', ",
-			"'", document.getElementById("newContact").value, "', ",
-			"'", document.getElementById("newNumber").value, "', ",
-			"'", document.getElementById("newEmail").value, "'",
+			"'", newName, "', ",
+			"'", newAddress, "', ",
+			"'", newContact, "', ",
+			"'", newNumber, "', ",
+			"'", newEmail, "'",
 			")"
 		)
 	};
@@ -220,6 +251,31 @@ editEntry = id => {
 		for (var i = 1; i <= 5; i++) {
 			tr.children[i].children[0].style.display = "block";
 			tr.children[i].children[1].style.display = "none";
+		}
+
+		if (!tr.children[1].children[1].value) {
+			alert("請填入名稱");
+			return;
+		}
+	
+		if (!tr.children[2].children[1].value) {
+			alert("請填入電話");
+			return;
+		}
+	
+		if (!tr.children[3].children[1].value) {
+			alert("請填入聯絡人");
+			return;
+		}
+	
+		if (!tr.children[4].children[1].value) {
+			alert("請填入電話");
+			return;
+		}
+	
+		if (!tr.children[5].children[1].value) {
+			alert("請填入 email");
+			return;
 		}
 
 		params = {

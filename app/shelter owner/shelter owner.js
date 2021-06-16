@@ -221,6 +221,11 @@ const buildAnimals = animals => {
 searchShelter = () => {
     const id = document.getElementById("id").value;
 
+    if (!validIntRange(id, 1, Infinity)) {
+        alert("收容所ID請輸入正整數")
+        return;
+    }
+
     params = {
 		queryType: "SEARCH",
 		tableName: shelterTable,
@@ -237,22 +242,58 @@ searchShelter = () => {
     .then(res => res.json() )
 	.then(shelter => buildShelter(shelter[0]))
     
-    searchPets(id);
+    searchCards(id);
 }
 
 const insertShelter = () => {
+    const newName = document.getElementById("newName").value;
+    const newAddress = document.getElementById("newAddress").value;
+    const newNumber = document.getElementById("newNumber").value;
+    const newCapacity = document.getElementById("newCapacity").value;
+	const newOccupied = document.getElementById("newOccupied").value;
+
+    if (!newName) {
+        alert("請輸入名稱");
+        return;
+    }
+
+    if (!newAddress) {
+        alert("請輸入地址");
+        return;
+    }
+
+    if (!newNumber) {
+        alert("請輸入電話");
+        return;
+    }
+
+    if (!validPhoneNumber(newNumber)) {
+        alert("電話請輸入數字, '-', 或空白鍵");
+        return;
+    }
+
+    if (!validIntRange(newCapacity, 0, Infinity)) {
+        alert("容量請填入0或正整數");
+        return;
+    }
+
+    if (!validIntRange(newOccupied, 0, Infinity)) {
+        alert("已收容數量請填入0或正整數");
+        return;
+    }
+
     params = {
 		queryType: "INSERT",
 		tableName: shelterTable,
 		columns: "(shelter_name, area_id, max_shelter, num_shelter, light, address, tel, need_help, can_help)",
 		values: "(".concat(
-			"'", document.getElementById("newName").value, "', ",
+			"'", newName, "', ",
             0, ", ",
-			document.getElementById("newCapacity").value, ", ",
-			document.getElementById("newOccupied").value, ", ",
+			newCapacity, ", ",
+			newOccupied, ", ",
             "'', ",
-            "'", document.getElementById("newAddress").value, "', ",
-            "'", document.getElementById("newNumber").value, "', ",
+            "'", newAddress, "', ",
+            "'", newNumber, "', ",
             (document.getElementById("newNeedHelp").value == "是" ? 1 : 0), ", ",
             (document.getElementById("newCanHelp").value == "是" ? 1 : 0),
 			")"
@@ -324,6 +365,36 @@ editShelter = id => {
                 (inputs[6].value == "是" ? 1 : 0),
 			]
 		};
+
+        if (!inputs[0].value) {
+            alert("名稱請勿留白");
+            return;
+        }
+    
+        if (!inputs[1].value) {
+            alert("地址請勿留白");
+            return;
+        }
+    
+        if (!inputs[2].value) {
+            alert("電話請勿留白");
+            return;
+        }
+    
+        if (!validPhoneNumber(!inputs[2].value)) {
+            alert("電話請輸入數字, '-', 或空白鍵")
+            return;
+        }
+    
+        if (!validIntRange(!inputs[3].value, 0, Infinity)) {
+            alert("容量請填入0或正整數");
+            return;
+        }
+    
+        if (!validIntRange(!inputs[4].value, 0, Infinity)) {
+            alert("已收容數量請填入0或正整數");
+            return;
+        }
 	
 		fetch(postShelterUrl, {
 			method: "POST",
@@ -337,11 +408,10 @@ editShelter = id => {
 	}
 }
 
-const searchPets = shelter_id => {
+const searchCards = shelter_id => {
     params = {
-        queryType: "JOIN_SEARCH",
-        table1: shelterTable,
-        table2: animalTable, 
+        queryType: "FILTER",
+        tableName: animalTable, 
         shelter_id: shelter_id
     };
     
@@ -357,11 +427,18 @@ const searchPets = shelter_id => {
 }
 
 const filterCards = () => {
+    const animalID = document.getElementById("animalID").value;
+
+    if (animalID && !validIntRange(animalID, 1, Infinity)) {
+        alert("ID請勿填入數字以外的字元");
+        return;
+    }
+
     params = {
 		queryType: "FILTER",
 		tableName: animalTable,
         shelterID: currentShelterID,
-        animalID: document.getElementById("id").value,
+        animalID: animalID,
 		kind: document.getElementById("kind").value,
 		size: document.getElementById("size").value,
 		sex: document.getElementById("sex").value,
@@ -387,6 +464,15 @@ const filterCards = () => {
 }
 
 insertCard = () => {
+
+    const newOpenDate = document.getElementById("newOpenDate").value;
+    const newCloseDate = document.getElementById("newCloseDate").value;
+
+    if (compareDates(newOpenDate, newCloseDate) == 1) {
+        alert("開放領養時間不得晚與結束時間");
+        return;
+    }
+
 	params = {
 		queryType: "INSERT",
 		tableName: animalTable,
@@ -403,8 +489,8 @@ insertCard = () => {
 			"'", document.getElementById("newFoundPlace").value, "', ",
 			"'", document.getElementById("newStatus").value, "', ",
 			"'", document.getElementById("newRemark").value, "', ",
-            "'", document.getElementById("newOpenDate").value, "', ",
-            "'", document.getElementById("newCloseDate").value, "'",
+            "'", newOpenDate, "', ",
+            "'", newCloseDate, "'",
 			")"
 		)
 	};
@@ -477,6 +563,11 @@ editCard = id => {
                 inputs[11].value
 			]
 		};
+
+        if (compareDates(inputs[10].value, inputs[11].value) == 1) {
+            alert("開放領養時間不得晚與結束時間");
+            return;
+        }
 	
 		fetch(postAnimalUrl, {
 			method: "POST",

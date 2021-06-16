@@ -20,15 +20,15 @@
 	<h3>註冊</h3>
 	<div id="owner-register">
 		<label>稱謂
-			<input type="text" name="newName" id="newName">
+			<input type="text" name="newName" id="newName" maxlength="10">
 		</label>
 
 		<label>聯絡電話
-			<input type="text" name="newPhone" id="newPhone">
+			<input type="text" name="newPhone" id="newNumber" maxlength="40">
 		</label>
 
 		<label>email
-			<input type="text" name="newEmail" id="newEmail">
+			<input type="text" name="newEmail" id="newEmail" maxlength="50">
 		</label>
 
 		<button class="submitButton" onclick="insertOwner()">Submit</button>
@@ -43,11 +43,11 @@
 	<h3>刊登遺失啟事</h3>
 	<div id="pet-register">
 		<label>晶片ID
-			<input type="text" name="newChipID" id="newChipID">
+			<input type="text" name="newChipID" id="newChipID" maxlength="50">
 		</label>
 
 		<label>寵物名字
-			<input type="text" name="newPetName" id="newPetName">
+			<input type="text" name="newPetName" id="newPetName" maxlength="20">
 		</label>
 
 		<label>寵物種類
@@ -59,11 +59,11 @@
 		</label>
 
 		<label>寵物品種
-			<input type="text" name="newBreed" id="newBreed">
+			<input type="text" name="newBreed" id="newBreed" maxlength="20">
 		</label>
 
 		<label>寵物毛色
-			<input type="text" name="newColor" id="newColor">
+			<input type="text" name="newColor" id="newColor" maxlength="30">
 		</label>
 
 		<label>寵物性別
@@ -74,11 +74,11 @@
 		</label>
 
 		<label>寵物外觀
-			<input type="text" name="newAppearance" id="newAppearance">
+			<input type="text" name="newAppearance" id="newAppearance" maxlength="20">
 		</label>
 
 		<label>遺失地點
-			<input type="text" name="newLostPlace" id="newLostPlace">
+			<input type="text" name="newLostPlace" id="newLostPlace" maxlength="50">
 		</label>
 
 		<label>遺失時間
@@ -89,6 +89,7 @@
 	</div>
 
 <script type="text/javascript" src="owner.js"></script>
+<script type="text/javascript" src="../exception.js"></script>
 
 </body>
 </html>

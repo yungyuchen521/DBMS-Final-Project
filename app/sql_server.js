@@ -9,7 +9,7 @@ const mysql = require('mysql');
 const db = mysql.createConnection({
 	host: "localhost",
 	user: "root",
-	password: "your password",
+	password: "********", // your password
 	database: "final_project" // your DB name
 });
 
@@ -94,36 +94,40 @@ app.post("/lost/post", (req, res) => {
 
 app.post("/owner/post", (req, res) => {
 	if (req.body.queryType == "DELETE") {
-		db.query(`DELETE FROM lost_pet\nWHERE owner_id = ${req.body.id};`, (err, rows) => {
+		const query = `DELETE FROM lost_pet\nWHERE owner_id = ${req.body.id};`;
+
+		db.query(query, (err, rows) => {
 			if (err) throw err;
 		});
 
-		console.log("delete pets");
+		console.log(query);
 	}
 
+	
 	db.query(getQuery(req.body), (err, rows) => {
 		if(err) throw err;
-
+	
 		if (req.body.queryType == "INSERT") {
 			db.query("SELECT MAX(id) AS id FROM owner;", (err, id) => {
 				if(err) throw err;
-				console.log(id);
 				res.send(id);
 			})
 		}
-
+	
 		else
 			res.send(rows);
-   });
+	});
 });
 
 app.post("/shelters/post", (req, res) => {	
 	if (req.body.queryType == "DELETE") {
-		db.query(`DELETE FROM adopt_animal\nWHERE animal_shelter_pkid = ${req.body.id};`, (err, rows) => {
+		const query = `DELETE FROM adopt_animal\nWHERE animal_shelter_pkid = ${req.body.id};`;
+
+		db.query(query, (err, rows) => {
 			if (err) throw err;
 		});
 
-		console.log("delete animals");
+		console.log(query);
 	}
 
 	db.query(getQuery(req.body), (err, rows) => {
@@ -132,7 +136,6 @@ app.post("/shelters/post", (req, res) => {
 		if (req.body.queryType == "INSERT") {
 			db.query("SELECT MAX(id) AS id FROM shelter;", (err, id) => {
 				if(err) throw err;
-				console.log(id);
 				res.send(id);
 			})
 		}
@@ -144,12 +147,12 @@ app.post("/shelters/post", (req, res) => {
 
 const server = app.listen(3000, () => console.log("server running on port 3000..."));
 
-const getQuery = (reqBody) => {
+const getQuery = reqBody => {
 	var query = "";
 
 	if (reqBody.queryType == "GET") {
 		if (reqBody.tableName == "lost_pet")
-			query = `SELECT *FROM ${reqBody.tableName} AS P, owner AS O\nWHERE P.owner_id = O.id\nLIMIT 50;`;
+			query = `SELECT *\nFROM ${reqBody.tableName} AS P, owner AS O\nWHERE P.owner_id = O.id\nLIMIT 50;`;
 
 		else if (reqBody.tableName == "adopt_animal")
 			query = `SELECT *\nFROM ${reqBody.tableName} AS A, shelter AS S\nWHERE A.animal_shelter_pkid = S.id\nORDER BY animal_id DESC\nLIMIT 50;`;
@@ -167,10 +170,7 @@ const getQuery = (reqBody) => {
 		else if (reqBody.queryType == "SORT") {
 			where = true;
 
-			query = `SELECT agency_id, agency_name, agency_address, contact_person, phone_number, email, 
-					 2 * PI() * 6371.3 / 360 * SQRT(POW((${reqBody.lat} - lat), 2) + POW((${reqBody.lng} - lng), 2)) AS distance
-					 FROM ${reqBody.tableName}
-					 WHERE lat IS NOT NULL AND lng is NOT NULL`;
+			query = `SELECT agency_id, agency_name, agency_address, contact_person, phone_number, email, 2 * PI() * 6371.3 / 360 * SQRT(POW((${reqBody.lat} - lat), 2) + POW((${reqBody.lng} - lng), 2)) AS distance\nFROM ${reqBody.tableName}\nWHERE lat IS NOT NULL AND lng is NOT NULL`;
 		}
 		
 
@@ -200,64 +200,41 @@ const getQuery = (reqBody) => {
 	}
 
 	else if (reqBody.queryType == "FILTER" && reqBody.tableName == "adopt_animal") {
-		query = `SELECT *\nFROM ${reqBody.tableName}`;
-		var where = false;
+		query = `SELECT *\nFROM ${reqBody.tableName} AS A, shelter AS S\nWHERE A.animal_shelter_pkid = S.id`;
+
+		
 
 		if (reqBody.kind != "無") {
 			if (reqBody.kind == "其他")
-				query = `${query}\nWHERE animal_kind NOT IN ("貓", "狗")`;
+				query = `${query} AND\n A.animal_kind NOT IN ("貓", "狗")`;
 
 			else
-				query = `${query}\nWHERE animal_kind = '${reqBody.kind}'`;
-
-			where = true;
+				query = `${query} AND\n A.animal_kind = '${reqBody.kind}'`;
 		}
 
-		if (reqBody.shelter_id) {
-			query = `${query}${where ? " AND\n" : "\nWHERE"} animal_shelter_pkid = '${reqBody.shelterID}'`;
-			where = true;
-		}
+		if (reqBody.size != "無")
+			query = `${query} AND\n A.animal_bodytype = '${reqBody.size}'`;
 
-		if (reqBody.size != "無") {
-			query = `${query}${where ? " AND\n" : "\nWHERE"} animal_bodytype = '${reqBody.size}'`;
-			where = true;
-		}
-
-		if (reqBody.sex != "無") {
-			query = `${query}${where ? " AND\n" : "\nWHERE"} animal_sex = '${reqBody.sex}'`;
-			where = true;
-		}
+		if (reqBody.sex != "無")
+			query = `${query} AND\n A.animal_sex = '${reqBody.sex}'`;
 
 		if (reqBody.color) {
 			const colorPattern = `%${reqBody.color}%`;
-			query = `${query}${where ? " AND\n" : "\nWHERE"} animal_colour LIKE '${colorPattern}'`;
-			where = true;
+			query = `${query} AND\n A.animal_colour LIKE '${colorPattern}'`;
 		}
 
-		if (reqBody.type && reqBody.age != "無") {
-			query = `${query}${where ? " AND\n" : "\nWHERE"} animal_age = ${reqBody.age}`;
-			where = true;
-		}
+		if (reqBody.type && reqBody.age != "無") 
+			query = `${query} AND\n A.animal_age = ${reqBody.age}`;
+		
 
-		if (reqBody.sterilization && reqBody.sterilization != "無") {
-			query = `${query}${where ? " AND\n" : "\nWHERE"} animal_sterilization = ${reqBody.sterilization}`;
-			where = true;
-		}
+		if (reqBody.sterilization && reqBody.sterilization != "無")
+			query = `${query} AND\n A.animal_sterilization = ${reqBody.sterilization}`;
 
-		if (reqBody.bacterin && reqBody.bacterin != "無") {
-			query = `${query}${where ? " AND\n" : "\nWHERE"} animal_age = ${reqBody.bacterin}`;
-			where = true;
-		}
+		if (reqBody.bacterin && reqBody.bacterin != "無")
+			query = `${query} AND\n A.animal_age = ${reqBody.bacterin}`;
 
-		if (reqBody.adopt && reqBody.adopt != "無") {
-			query = `${query}${where ? " AND\n" : "\nWHERE"} animal_status ${reqBody.adopt == "是" ? '=' : '!='} 'OPEN'`;
-			where = true;
-		}
-
-		if (reqBody.status && reqBody.status != "無") {
-			query = `${query}${where ? " AND\n" : "\nWHERE"} animal_status = ${reqBody.status}`;
-			where = true;
-		}
+		if (reqBody.adopt && reqBody.adopt != "無")
+			query = `${query} AND\n A.animal_status ${reqBody.adopt == "是" ? '=' : '!='} 'OPEN'`;
 
 		query = `${query}\nORDER BY animal_id DESC`;
 
@@ -299,7 +276,7 @@ const getQuery = (reqBody) => {
 		}
 
 		if (reqBody.sort)
-			query = `${query}\nORDER BY num_shelter/max_shelter ASC;`
+			query = `${query}\nORDER BY max_shelter - num_shelter DESC;`
 	}
 
 	else if (reqBody.queryType == "FILTER" && reqBody.tableName == "lost_pet") {
@@ -366,10 +343,12 @@ const getQuery = (reqBody) => {
 		query = `SELECT *\nFROM ${reqBody.tableName}\n${wherePK(reqBody.tableName, reqBody.id)};`;
 
 	else if (reqBody.queryType == "JOIN_SEARCH" && reqBody.table1 == "owner" && reqBody.table2 == "lost_pet")
-		query = `SELECT *\nFROM ${reqBody.table1} AS O, ${reqBody.table2} AS P\nWHERE P.owner_id = O.id AND O.id = ${reqBody.owner_id};`;
-
+		query = `SELECT *\nFROM ${reqBody.table2}\nWHERE owner_id = ${reqBody.owner_id};`;
+	
 	else if (reqBody.queryType == "JOIN_SEARCH" && reqBody.table1 == "shelter" && reqBody.table2 == "adopt_animal")
-		query = `SELECT *\nFROM ${reqBody.table1} AS S, ${reqBody.table2} AS A\nWHERE S.id = A.animal_shelter_pkid AND S.id = ${reqBody.shelter_id} LIMIT 10;`;
+		query = `SELECT *\nFROM ${reqBody.table2}\nWHERE animal_shelter_pkid = ${reqBody.shelter_id}\nLIMIT 10;`;
+	
+	//query = `SELECT *\nFROM ${reqBody.table1} AS S, ${reqBody.table2} AS A\nWHERE S.id = A.animal_shelter_pkid AND S.id = ${reqBody.shelter_id} LIMIT 10;`;
 
 	else
 		query = `SELECT *\nFROM ${reqBody.tableName}\nLIMIT 5;`;
@@ -392,21 +371,4 @@ wherePK = (table, id) => {
 		default:
 			return `WHERE id = ${id}`;		
 	}
-}
-
-const getDistance = (lng1, lat1, lng2, lat2) => {
-	/*
-	const R = 6.3713; // avg radius of earhc
-	
-	const φ1 = lat1 * Math.PI/180; // φ, λ in radians
-	const φ2 = lat2 * Math.PI/180;
-	const Δφ = (lat2-lat1) * Math.PI/180;
-	const Δλ = (lng2-lng1) * Math.PI/180;
-
-	const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ/2) * Math.sin(Δλ/2);
-	const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
-	const d = R * c; // in km
-
-	return d;*/
 }

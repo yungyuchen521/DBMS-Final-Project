@@ -20,23 +20,23 @@
 	<h3>註冊</h3>
 	<div id="owner-register">
 		<label>名稱
-			<input type="text" name="newName" id="newName">
+			<input type="text" name="newName" id="newName" maxlength="50">
 		</label>
 
 		<label>地址
-			<input type="text" name="newAddress" id="newAddress">
+			<input type="text" name="newAddress" id="newAddress" maxlength="100">
 		</label>
 
 		<label>電話
-			<input type="tel" name="newNumber" id="newNumber">
+			<input type="tel" name="newNumber" id="newNumber" maxlength="20">
 		</label>
 
         <label>容量
-			<input type="number" name="newCapacity" id="newCapacity" value="0">
+			<input type="number" name="newCapacity" id="newCapacity" value="0" min="0">
 		</label>
 
         <label>已收容數量
-			<input type="number" name="newOccupied" id="newOccupied" value="0">
+			<input type="number" name="newOccupied" id="newOccupied" value="0" min="0">
 		</label>
 
         <label>需要支援
@@ -64,7 +64,7 @@
 		<h4>篩選</h4>
 
 		<label>ID
-			<input type="text" name="id" id="id">
+			<input type="text" name="animalID" id="animalID">
 		</label>
 
 		<label>種類
@@ -95,7 +95,7 @@
         </label>
 
 		<label>毛色
-			<input type="text" name="color" id="color">
+			<input type="text" name="color" id="color" maxlength="8">
 		</label>
 
 		<label>年紀
@@ -165,7 +165,7 @@
         </label>
 
 		<label>毛色
-			<input type="text" name="newColor" id="newColor">
+			<input type="text" name="newColor" id="newColor" maxlength="8">
 		</label>
 
 		<label>年紀
@@ -191,7 +191,7 @@
         </label>
 
 		<label>尋獲地點
-			<input type="text" name="newFoundPlace" id="newFoundPlace">
+			<input type="text" name="newFoundPlace" id="newFoundPlace" maxlength="100">
 		</label>
 
 		<label>動物狀態
@@ -205,7 +205,7 @@
 		</label>
 
         <label>備註
-			<input type="text" name="newRemark" id="newRemark">
+			<input type="text" name="newRemark" id="newRemark" maxlength="300">
 		</label>
 
         <label>開放領養日期
@@ -220,6 +220,7 @@
 	</div>
 
 <script type="text/javascript" src="shelter owner.js"></script>
+<script type="text/javascript" src="../exception.js"></script>
 
 </body>
 </html>

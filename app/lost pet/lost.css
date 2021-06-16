@@ -40,3 +40,7 @@ label {
 	margin: 10px auto;
 	font-size: 20px;
 }
+
+#filter * {
+	font-size: 20px;
+}

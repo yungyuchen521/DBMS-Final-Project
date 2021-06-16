@@ -11,7 +11,7 @@
 
 	<div id="filter">
 		<label>晶片號碼
-			<input type="text" name="chip_id" id="chip_id">
+			<input type="text" name="chip_id" id="chip_id" maxlength="25">
 		</label>
 
 		<label>種類
@@ -24,7 +24,7 @@
 		</label>
 
 		<label>品種
-			<input type="text" name="breed" id="breed">
+			<input type="text" name="breed" id="breed" maxlength="20">
 		</label>
 
 		<label>性別
@@ -36,7 +36,7 @@
 		</label>
 
 		<label>顏色
-			<input type="text" name="color" id="color">
+			<input type="text" name="color" id="color" maxlength="30">
 		</label>
 
 		<button class="submitButton" onclick="filterCards()">Submit</button>
@@ -47,6 +47,7 @@
 	<div id="pets-container"></div>
 
 <script type="text/javascript" src="lost.js"></script>
+<script type="text/javascript" src="../exception.js"></script>
 
 </body>
 </html>
