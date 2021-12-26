@@ -1,2 +1,2 @@
 # DBMS-Final-Project
-Refer to Report.pdf for details
+Please refer to Report.pdf for details
